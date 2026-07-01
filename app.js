@@ -338,3 +338,31 @@ function mostrarMensaje(texto, tipo) {
     mensaje.textContent = "";
   }, 4000);
 }
+
+function mostrarVista(vista) {
+  document.querySelectorAll(".vista").forEach(function(seccion) {
+    seccion.classList.add("oculto");
+  });
+
+  const seccionActiva = document.getElementById(vista);
+  if (seccionActiva) {
+    seccionActiva.classList.remove("oculto");
+  }
+
+  document.querySelectorAll(".tab").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+  if (vista === "inicio") document.querySelectorAll(".tab")[0].classList.add("active");
+  if (vista === "estadisticas") document.querySelectorAll(".tab")[1].classList.add("active");
+  if (vista === "generador") document.querySelectorAll(".tab")[2].classList.add("active");
+  if (vista === "historialVista") document.querySelectorAll(".tab")[3].classList.add("active");
+
+  if (vista === "estadisticas" && typeof calcularEstadisticas === "function") {
+    setTimeout(calcularEstadisticas, 100);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  mostrarVista("inicio");
+});

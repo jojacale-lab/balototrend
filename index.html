@@ -5,135 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BalotoTrend</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
   <main class="app">
+
     <nav class="menu">
-    <button class="tab active" onclick="mostrarVista('inicio')">🏠 Inicio</button>
-    <button class="tab" onclick="mostrarVista('estadisticas')">📊 Estadísticas</button>
-    <button class="tab" onclick="mostrarVista('generador')">🎲 Generador</button>
-    <button class="tab" onclick="mostrarVista('historial')">📅 Histórico</button>
-</nav>
-<div id="inicio" class="vista"></div>
-    <section class="hero">
-      <h1>BalotoTrend</h1>
-      <p>Analiza tendencias, juega con datos y crea tus combinaciones favoritas</p>
-    </section>
-</div>
+      <button class="tab active" onclick="mostrarVista('inicio')">🏠 Inicio</button>
+      <button class="tab" onclick="mostrarVista('estadisticas')">📊 Estadísticas</button>
+      <button class="tab" onclick="mostrarVista('generador')">🎲 Generador</button>
+      <button class="tab" onclick="mostrarVista('historialVista')">📅 Histórico</button>
+    </nav>
 
-<div id="estadisticas" class="vista" style="display:none;">
-    </div>
+    <section id="inicio" class="vista">
+      <section class="hero">
+        <h1>BalotoTrend</h1>
+        <p>Analiza tendencias, juega con datos y crea tus combinaciones favoritas</p>
+      </section>
 
-<div id="generador" class="vista" style="display:none;">
-    <section class="card">
-      <h2>Agregar resultado</h2>
-      <div class="dashboard">
+      <section class="card">
+        <h2>Agregar resultado</h2>
 
-    <div class="dashboard-card">
-        <h3>📊 Resultados Analizados</h3>
-        <span id="totalResultados">0</span>
-    </div>
+        <label>Fecha del sorteo</label>
+        <input type="date" id="fecha" />
 
-    <div class="dashboard-card">
-        <h3>🔥 Número más frecuente</h3>
-        <span id="numeroTop">--</span>
-    </div>
-
-    <div class="dashboard-card">
-        <h3>❄ Número menos frecuente</h3>
-        <span id="numeroFrio">--</span>
-    </div>
-
-    <div class="dashboard-card">
-        <h3>🎯 Superbalota Top</h3>
-        <span id="superTop">--</span>
-    </div>
-
-</div>
-
-<canvas id="graficoFrecuencia" height="180"></canvas>
-      <label>Fecha del sorteo</label>
-      <input type="date" id="fecha" />
-
-      <label>Números principales</label>
-      <div class="numbers-grid">
-        <input type="number" id="n1" min="1" max="43" placeholder="1" />
-        <input type="number" id="n2" min="1" max="43" placeholder="2" />
-        <input type="number" id="n3" min="1" max="43" placeholder="3" />
-        <input type="number" id="n4" min="1" max="43" placeholder="4" />
-        <input type="number" id="n5" min="1" max="43" placeholder="5" />
-      </div>
-
-      <label>Superbalota</label>
-      <input type="number" id="superbalota" min="1" max="16" placeholder="1 - 16" />
-
-      <button id="guardar">Guardar resultado</button>
-      <button id="actualizarOficial">Actualizar desde Baloto oficial</button>
-
-      <p id="mensaje"></p>
-    </section>
-</div>
-
-<div id="historialVista" class="vista" style="display:none;">
-    <section class="card">
-      <h2>Generador sugerido</h2>
-      <button id="generar">Generar combinación</button>
-      <div id="combinacion" class="combo"></div>
-    </section>
-</div>
-    <section class="card">
-      <h2>Estadísticas</h2>
-      <p class="total-box">Resultados analizados: <strong id="totalResultados">0</strong></p>
-      <div class="stats-grid">
-        <div>
-          <h3>Más frecuentes</h3>
-          <p id="masFrecuentes">Sin datos</p>
+        <label>Números principales</label>
+        <div class="numbers-grid">
+          <input type="number" id="n1" min="1" max="43" placeholder="1" />
+          <input type="number" id="n2" min="1" max="43" placeholder="2" />
+          <input type="number" id="n3" min="1" max="43" placeholder="3" />
+          <input type="number" id="n4" min="1" max="43" placeholder="4" />
+          <input type="number" id="n5" min="1" max="43" placeholder="5" />
         </div>
 
-        <div>
-          <h3>Menos frecuentes</h3>
-          <p id="menosFrecuentes">Sin datos</p>
-        </div>
+        <label>Superbalota</label>
+        <input type="number" id="superbalota" min="1" max="16" placeholder="1 - 16" />
 
-        <div>
-          <h3>Superbalota frecuente</h3>
-          <p id="superFrecuente">Sin datos</p>
-        </div>
+        <button id="guardar">Guardar resultado</button>
+        <button id="actualizarOficial">Actualizar desde Baloto oficial</button>
 
-        <div>
-          <h3>Pares / Impares</h3>
-          <p id="paresImpares">Sin datos</p>
-        </div>
-
-        <div>
-          <h3>Bajos / Altos</h3>
-          <p id="bajosAltos">Sin datos</p>
-        </div>
-
-        <div>
-          <h3>Suma promedio</h3>
-          <p id="sumaPromedio">Sin datos</p>
-        </div>
-      </div>
-      <div>
-  <h3>Números más atrasados</h3>
-  <p id="numerosAtrasados">Calculando...</p>
-</div>
+        <p id="mensaje"></p>
+      </section>
     </section>
 
-    <section class="card">
-      <h2>Historial</h2>
-      <div id="historial"></div>
+    <section id="estadisticas" class="vista oculto">
+      <section class="card">
+        <h2>Estadísticas</h2>
+
+        <div class="dashboard">
+          <div class="dashboard-card">
+            <h3>📊 Resultados Analizados</h3>
+            <span id="totalResultados">0</span>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>🔥 Número más frecuente</h3>
+            <span id="numeroTop">--</span>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>❄ Número menos frecuente</h3>
+            <span id="numeroFrio">--</span>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>🎯 Superbalota Top</h3>
+            <span id="superTop">--</span>
+          </div>
+        </div>
+
+        <canvas id="graficoFrecuencia" height="180"></canvas>
+
+        <div class="stats-grid">
+          <div>
+            <h3>Más frecuentes</h3>
+            <p id="masFrecuentes">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Menos frecuentes</h3>
+            <p id="menosFrecuentes">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Superbalota frecuente</h3>
+            <p id="superFrecuente">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Pares / Impares</h3>
+            <p id="paresImpares">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Bajos / Altos</h3>
+            <p id="bajosAltos">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Suma promedio</h3>
+            <p id="sumaPromedio">Sin datos</p>
+          </div>
+
+          <div>
+            <h3>Números más atrasados</h3>
+            <p id="numerosAtrasados">Calculando...</p>
+          </div>
+        </div>
+      </section>
     </section>
-    </div>
+
+    <section id="generador" class="vista oculto">
+      <section class="card">
+        <h2>Generador sugerido</h2>
+        <button id="generar">Generar combinación</button>
+        <div id="combinacion" class="combo"></div>
+      </section>
+    </section>
+
+    <section id="historialVista" class="vista oculto">
+      <section class="card">
+        <h2>Historial</h2>
+        <div id="historial"></div>
+      </section>
+    </section>
 
     <footer>
       <p>Uso recreativo. No predice ni garantiza resultados.</p>
     </footer>
-    </div>
+
   </main>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script src="app.js"></script>
 </body>
 </html>
