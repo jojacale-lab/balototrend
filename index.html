@@ -9,11 +9,23 @@
 <body>
 
   <main class="app">
+    <nav class="menu">
+    <button class="tab active" onclick="mostrarVista('inicio')">🏠 Inicio</button>
+    <button class="tab" onclick="mostrarVista('estadisticas')">📊 Estadísticas</button>
+    <button class="tab" onclick="mostrarVista('generador')">🎲 Generador</button>
+    <button class="tab" onclick="mostrarVista('historial')">📅 Histórico</button>
+</nav>
+<div id="inicio" class="vista"></div>
     <section class="hero">
       <h1>BalotoTrend</h1>
       <p>Analiza tendencias, juega con datos y crea tus combinaciones favoritas</p>
     </section>
+</div>
 
+<div id="estadisticas" class="vista" style="display:none;">
+    </div>
+
+<div id="generador" class="vista" style="display:none;">
     <section class="card">
       <h2>Agregar resultado</h2>
       <div class="dashboard">
@@ -61,13 +73,15 @@
 
       <p id="mensaje"></p>
     </section>
+</div>
 
+<div id="historialVista" class="vista" style="display:none;">
     <section class="card">
       <h2>Generador sugerido</h2>
       <button id="generar">Generar combinación</button>
       <div id="combinacion" class="combo"></div>
     </section>
-
+</div>
     <section class="card">
       <h2>Estadísticas</h2>
       <p class="total-box">Resultados analizados: <strong id="totalResultados">0</strong></p>
@@ -102,16 +116,22 @@
           <p id="sumaPromedio">Sin datos</p>
         </div>
       </div>
+      <div>
+  <h3>Números más atrasados</h3>
+  <p id="numerosAtrasados">Calculando...</p>
+</div>
     </section>
 
     <section class="card">
       <h2>Historial</h2>
       <div id="historial"></div>
     </section>
+    </div>
 
     <footer>
       <p>Uso recreativo. No predice ni garantiza resultados.</p>
     </footer>
+    </div>
   </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>

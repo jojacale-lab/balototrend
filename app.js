@@ -17,7 +17,7 @@ const superFrecuente = document.getElementById("superFrecuente");
 const paresImpares = document.getElementById("paresImpares");
 const bajosAltos = document.getElementById("bajosAltos");
 const sumaPromedio = document.getElementById("sumaPromedio");
-
+const numerosAtrasados = document.getElementById("numerosAtrasados");
 const numeroTop = document.getElementById("numeroTop");
 const numeroFrio = document.getElementById("numeroFrio");
 const superTop = document.getElementById("superTop");
@@ -143,7 +143,31 @@ function calcularEstadisticas() {
   }
 
   totalResultados.textContent = resultados.length;
+const ultimoSorteoNumero = {};
 
+resultados.forEach((resultado, indice) => {
+  resultado.numeros.forEach(numero => {
+    if (ultimoSorteoNumero[numero] === undefined) {
+      ultimoSorteoNumero[numero] = indice;
+    }
+  });
+});
+
+const atrasados = [];
+
+for (let i = 1; i <= 43; i++) {
+  atrasados.push({
+    numero: i,
+    atraso: ultimoSorteoNumero[i] ?? resultados.length
+  });
+}
+
+atrasados.sort((a, b) => b.atraso - a.atraso);
+
+numerosAtrasados.innerHTML = atrasados
+  .slice(0, 5)
+  .map(n => `${n.numero} (${n.atraso} sorteos)`)
+  .join("<br>");
   const conteo = crearConteo(1, 43);
   const conteoSuper = crearConteo(1, 16);
 
