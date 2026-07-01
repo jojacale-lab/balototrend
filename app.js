@@ -10,6 +10,7 @@ const mensaje = document.getElementById("mensaje");
 const historialDiv = document.getElementById("historial");
 const combinacionDiv = document.getElementById("combinacion");
 
+const totalResultados = document.getElementById("totalResultados");
 const masFrecuentes = document.getElementById("masFrecuentes");
 const menosFrecuentes = document.getElementById("menosFrecuentes");
 const superFrecuente = document.getElementById("superFrecuente");
@@ -53,13 +54,10 @@ function guardarResultado() {
   }
 
   numeros.sort((a, b) => a - b);
-
   resultados.unshift({ fecha, numeros, superbalota });
+
   guardarDatos();
-
-  inputsNumeros.forEach(input => input.value = "");
-  superInput.value = "";
-
+  limpiarFormulario();
   mostrarMensaje("Resultado guardado correctamente.", "ok");
   actualizarApp();
 }
@@ -98,7 +96,7 @@ async function actualizarDesdeBaloto() {
 
   } catch (error) {
     console.error(error);
-    mostrarMensaje("No se pudo conectar. Prueba cuando esté en Netlify.", "error");
+    mostrarMensaje("No se pudo conectar con Baloto oficial.", "error");
   }
 }
 
@@ -124,6 +122,7 @@ function mostrarHistorial() {
 
 function calcularEstadisticas() {
   if (resultados.length === 0) {
+    totalResultados.textContent = 0;
     masFrecuentes.textContent = "Sin datos";
     menosFrecuentes.textContent = "Sin datos";
     superFrecuente.textContent = "Sin datos";
@@ -132,6 +131,8 @@ function calcularEstadisticas() {
     sumaPromedio.textContent = "Sin datos";
     return;
   }
+
+  totalResultados.textContent = resultados.length;
 
   const conteo = crearConteo(1, 43);
   const conteoSuper = crearConteo(1, 16);
@@ -191,7 +192,6 @@ function generarCombinacion() {
   }
 
   numeros.sort((a, b) => a - b);
-
   const superbalota = numeroAleatorio(1, 16);
 
   combinacionDiv.innerHTML = `
@@ -222,6 +222,11 @@ function numeroAleatorio(min, max) {
 
 function guardarDatos() {
   localStorage.setItem("resultadosBaloto", JSON.stringify(resultados));
+}
+
+function limpiarFormulario() {
+  inputsNumeros.forEach(input => input.value = "");
+  superInput.value = "";
 }
 
 function mostrarMensaje(texto, tipo) {
