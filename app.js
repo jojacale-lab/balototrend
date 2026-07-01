@@ -18,6 +18,12 @@ const paresImpares = document.getElementById("paresImpares");
 const bajosAltos = document.getElementById("bajosAltos");
 const sumaPromedio = document.getElementById("sumaPromedio");
 
+const numeroTop = document.getElementById("numeroTop");
+const numeroFrio = document.getElementById("numeroFrio");
+const superTop = document.getElementById("superTop");
+const graficoFrecuenciaCanvas = document.getElementById("graficoFrecuencia");
+
+let graficoFrecuencia = null;
 let resultados = JSON.parse(localStorage.getItem("resultadosBaloto")) || [];
 
 fechaInput.value = new Date().toISOString().slice(0, 10);
@@ -111,7 +117,7 @@ function mostrarHistorial() {
     return;
   }
 
-  historialDiv.innerHTML = resultados.map(r => `
+  historialDiv.innerHTML = resultados.slice(0, 30).map(r => `
     <div class="resultado">
       <strong>${r.fecha}</strong><br>
       Números: ${r.numeros.join(" - ")}<br>
@@ -129,6 +135,10 @@ function calcularEstadisticas() {
     paresImpares.textContent = "Sin datos";
     bajosAltos.textContent = "Sin datos";
     sumaPromedio.textContent = "Sin datos";
+    numeroTop.textContent = "--";
+    numeroFrio.textContent = "--";
+    superTop.textContent = "--";
+    dibujarGraficoFrecuencia(crearConteo(1, 43));
     return;
   }
 
@@ -158,12 +168,69 @@ function calcularEstadisticas() {
     sumaTotal += r.numeros.reduce((a, b) => a + b, 0);
   });
 
+  const top = obtenerTop(conteo, "desc");
+  const frio = obtenerTop(conteo, "asc");
+  const topSuper = obtenerTop(conteoSuper, "desc");
+
   masFrecuentes.textContent = topNumeros(conteo, 5, "desc");
   menosFrecuentes.textContent = topNumeros(conteo, 5, "asc");
   superFrecuente.textContent = topNumeros(conteoSuper, 3, "desc");
   paresImpares.textContent = `${totalPares} pares / ${totalImpares} impares`;
   bajosAltos.textContent = `${totalBajos} bajos / ${totalAltos} altos`;
   sumaPromedio.textContent = Math.round(sumaTotal / resultados.length);
+
+  numeroTop.textContent = `${top.numero} (${top.veces})`;
+  numeroFrio.textContent = `${frio.numero} (${frio.veces})`;
+  superTop.textContent = `${topSuper.numero} (${topSuper.veces})`;
+
+  dibujarGraficoFrecuencia(conteo);
+}
+
+function dibujarGraficoFrecuencia(conteo) {
+  if (!graficoFrecuenciaCanvas) return;
+
+  const labels = Object.keys(conteo);
+  const datos = Object.values(conteo);
+
+  if (graficoFrecuencia) {
+    graficoFrecuencia.destroy();
+  }
+
+  graficoFrecuencia = new Chart(graficoFrecuenciaCanvas, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Frecuencia",
+        data: datos,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: "Frecuencia de números principales"
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 90
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
 
 function generarCombinacion() {
@@ -206,6 +273,16 @@ function crearConteo(inicio, fin) {
     conteo[i] = 0;
   }
   return conteo;
+}
+
+function obtenerTop(conteo, orden) {
+  const item = Object.entries(conteo)
+    .sort((a, b) => orden === "desc" ? b[1] - a[1] : a[1] - b[1])[0];
+
+  return {
+    numero: item[0],
+    veces: item[1]
+  };
 }
 
 function topNumeros(conteo, cantidad, orden) {

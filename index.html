@@ -16,7 +16,31 @@
 
     <section class="card">
       <h2>Agregar resultado</h2>
+      <div class="dashboard">
 
+    <div class="dashboard-card">
+        <h3>📊 Resultados Analizados</h3>
+        <span id="totalResultados">0</span>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🔥 Número más frecuente</h3>
+        <span id="numeroTop">--</span>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>❄ Número menos frecuente</h3>
+        <span id="numeroFrio">--</span>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🎯 Superbalota Top</h3>
+        <span id="superTop">--</span>
+    </div>
+
+</div>
+
+<canvas id="graficoFrecuencia" height="180"></canvas>
       <label>Fecha del sorteo</label>
       <input type="date" id="fecha" />
 
@@ -89,7 +113,7 @@
       <p>Uso recreativo. No predice ni garantiza resultados.</p>
     </footer>
   </main>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -194,4 +194,57 @@ footer {
   .hero h1 {
     font-size: 2rem;
   }
+  .dashboard{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.dashboard-card{
+
+background:linear-gradient(135deg,#0077ff,#22c55e);
+
+border-radius:18px;
+
+padding:18px;
+
+color:white;
+
+text-align:center;
+
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.dashboard-card h3{
+
+margin:0;
+
+font-size:.9rem;
+
+}
+
+.dashboard-card span{
+
+display:block;
+
+margin-top:10px;
+
+font-size:2rem;
+
+font-weight:bold;
+
+}
+
+canvas{
+
+margin-top:25px;
+
+background:white;
+
+border-radius:20px;
+
+padding:15px;
+
 }
