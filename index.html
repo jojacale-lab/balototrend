@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BalotoTrend</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="app">
+    <section class="hero">
+      <h1>BalotoTrend</h1>
+      <p>Analiza tendencias, juega con datos y crea tus combinaciones favoritas</p>
+    </section>
+
+    <section class="card">
+      <h2>Agregar resultado</h2>
+
+      <label>Fecha del sorteo</label>
+      <input type="date" id="fecha" />
+
+      <label>Números principales</label>
+      <div class="numbers-grid">
+        <input type="number" id="n1" min="1" max="43" placeholder="1" />
+        <input type="number" id="n2" min="1" max="43" placeholder="2" />
+        <input type="number" id="n3" min="1" max="43" placeholder="3" />
+        <input type="number" id="n4" min="1" max="43" placeholder="4" />
+        <input type="number" id="n5" min="1" max="43" placeholder="5" />
+      </div>
+
+      <label>Superbalota</label>
+      <input type="number" id="superbalota" min="1" max="16" placeholder="1 - 16" />
+
+      <button id="guardar">Guardar resultado</button>
+      <button id="actualizarOficial">Actualizar desde Baloto oficial</button>
+
+      <p id="mensaje"></p>
+    </section>
+
+    <section class="card">
+      <h2>Generador sugerido</h2>
+      <button id="generar">Generar combinación</button>
+      <div id="combinacion" class="combo"></div>
+    </section>
+
+    <section class="card">
+      <h2>Estadísticas</h2>
+
+      <div class="stats-grid">
+        <div>
+          <h3>Más frecuentes</h3>
+          <p id="masFrecuentes">Sin datos</p>
+        </div>
+
+        <div>
+          <h3>Menos frecuentes</h3>
+          <p id="menosFrecuentes">Sin datos</p>
+        </div>
+
+        <div>
+          <h3>Superbalota frecuente</h3>
+          <p id="superFrecuente">Sin datos</p>
+        </div>
+
+        <div>
+          <h3>Pares / Impares</h3>
+          <p id="paresImpares">Sin datos</p>
+        </div>
+
+        <div>
+          <h3>Bajos / Altos</h3>
+          <p id="bajosAltos">Sin datos</p>
+        </div>
+
+        <div>
+          <h3>Suma promedio</h3>
+          <p id="sumaPromedio">Sin datos</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Historial</h2>
+      <div id="historial"></div>
+    </section>
+
+    <footer>
+      <p>Uso recreativo. No predice ni garantiza resultados.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
