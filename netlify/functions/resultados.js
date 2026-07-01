@@ -10,12 +10,19 @@ export async function handler() {
 
     const html = await response.text();
 
-    const regex = /(\d{1,2} de [A-Za-zÁÉÍÓÚáéíóú]+ de \d{4})\s+(\d{2})\s*-\s*(\d{2})\s*-\s*(\d{2})\s*-\s*(\d{2})\s*-\s*(\d{2})\s*-\s*(\d{2})/g;
+    const texto = html
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\s+/g, " ");
+
+    const regex = /(\d{1,2} de [A-Za-zÁÉÍÓÚáéíóú]+ de \d{4})\s+(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*(\d{1,2})\s*-\s*(\d{1,2})/g;
 
     const resultados = [];
     let match;
 
-    while ((match = regex.exec(html)) !== null) {
+    while ((match = regex.exec(texto)) !== null) {
       resultados.push({
         fecha: match[1],
         numeros: [
